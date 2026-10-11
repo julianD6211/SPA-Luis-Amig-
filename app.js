@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollChatToBottom();
 
     if (chatForm && chatInput && chatMessages) {
-        chatForm.addEventListener('submit', (e) => {
+        chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             if (!currentUser) {
