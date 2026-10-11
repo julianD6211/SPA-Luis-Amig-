@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Amigó - SPA Introducción a la Ingeniería de Sistemas</title>
+    <!-- Google Fonts para tipografía moderna -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Iconos de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- BARRA DE NAVEGACIÓN LATERAL (Sidebar) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-graduation-cap logo-icon"></i>
+                    <div class="logo-text">
+                        <span class="logo-title">Sistemas</span>
+                        <span class="logo-subtitle">Luis Amigó</span>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#inicio" class="nav-link active" data-target="inicio">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#unidad1" class="nav-link" data-target="unidad1">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Unidad 1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#unidad2" class="nav-link" data-target="unidad2">
+                            <i class="fa-solid fa-laptop-code"></i>
+                            <span>Unidad 2</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#unidad3" class="nav-link" data-target="unidad3">
+                            <i class="fa-solid fa-network-wired"></i>
+                            <span>Unidad 3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#hojasdevida" class="nav-link" data-target="hojasdevida">
+                            <i class="fa-solid fa-id-card"></i>
+                            <span>Hojas de Vida</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Curso de Introducción a la Ingeniería de Sistemas</p>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- HEADER DE LA SPA (Responsive mobile nav bar trigger & title) -->
+            <header class="main-header">
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="header-info">
+                    <span class="header-tag">Proyecto Final SPA</span>
+                    <h1 class="header-title" id="currentViewTitle">Inicio</h1>
+                </div>
+                <div class="header-meta">
+                    <span class="semester"><i class="fa-regular fa-calendar-check"></i> Semestre II - 2026</span>
+                </div>
+            </header>
+
+            <!-- VISTAS DINÁMICAS (Se intercambian mediante JS) -->
+            <div class="views-wrapper">
+                
+                <!-- 1. PÁGINA PRINCIPAL (INICIO) -->
+                <section id="inicio" class="view-section active">
+                    <div class="welcome-card animate-fade">
+                        <div class="welcome-content">
+                            <span class="badge">Bienvenido</span>
+                            <h2>Introducción a la Ingeniería de Sistemas</h2>
+                            <p>Esta Single Page Application (SPA) modular ha sido diseñada para presentar los aprendizajes, proyectos e integrantes de nuestro equipo en el marco del curso institucional. Explora las unidades de aprendizaje, conoce nuestro perfil profesional en la sección de Hojas de Vida y participa en nuestro foro interactivo.</p>
+                            <div class="welcome-features">
+                                <div class="feature-item">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span>Estructura Modular</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span>Navegación Dinámica</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span>Diseño Minimalista</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="welcome-illustration">
+                            <i class="fa-solid fa-cubes-stacked decoration-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="quick-overview-grid">
+                        <div class="info-card">
+                            <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+                            <h3>Unidades de Aprendizaje</h3>
+                            <p>Accede de forma interactiva a los contenidos y talleres de las tres unidades principales del curso.</p>
+                            <button class="btn-text explore-btn" data-go="unidad1">Explorar Unidad 1 <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                        <div class="info-card">
+                            <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+                            <h3>Nuestro Equipo</h3>
+                            <p>Consulta los perfiles, portafolios y hojas de vida de los ingenieros en formación del proyecto.</p>
+                            <button class="btn-text explore-btn" data-go="hojasdevida">Ver Hojas de Vida <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. MÓDULOS DE UNIDADES (CONTENIDOS OFICIALES DEL PDF) -->
+                <section id="unidad1" class="view-section">
+                    <div class="unit-container">
+                        <div class="unit-header-card">
+                            <span class="unit-badge">Unidad de Aprendizaje I</span>
+                            <h2>Fundamentos y el Pensamiento Sistémico</h2>
+                            <p class="unit-description">Esta unidad presenta la ingeniería de sistemas, su evolución y las herramientas conceptuales para analizar problemas y organizaciones como sistemas.</p>
+                        </div>
+                        <div class="unit-grid-layout">
+                            <div class="topics-panel">
+                                <h3 class="panel-title"><i class="fa-solid fa-list-check"></i> Temas de la unidad</h3>
+                                <ul class="topics-list">
+                                    <li><span class="topic-num">1.1</span><div class="topic-info"><h4>¿Qué es la ingeniería?</h4><p>Disciplina que aplica conocimientos científicos y técnicos para diseñar soluciones útiles, seguras y sostenibles a necesidades humanas.</p></div></li>
+                                    <li><span class="topic-num">1.2</span><div class="topic-info"><h4>Historia y evolución de la ingeniería de sistemas</h4><p>Recorrido desde el análisis de sistemas y la computación inicial hasta las soluciones digitales conectadas y orientadas a datos.</p></div></li>
+                                    <li><span class="topic-num">1.3</span><div class="topic-info"><h4>Ingeniería de sistemas vs. otras ramas de la ingeniería</h4><p>La ingeniería de sistemas integra personas, procesos, información y tecnología, mientras otras ramas se enfocan en dominios físicos específicos.</p></div></li>
+                                    <li><span class="topic-num">1.4</span><div class="topic-info"><h4>¿Qué problemas resuelve la ingeniería de sistemas?</h4><p>Ayuda a comprender necesidades complejas y a crear soluciones mediante software, automatización, integración de datos y mejora de procesos.</p></div></li>
+                                    <li><span class="topic-num">1.5</span><div class="topic-info"><h4>Enfoque de resolución de problemas y pensamiento sistémico</h4><p>Analiza causas, relaciones, límites y efectos de un problema antes de proponer una solución completa y verificable.</p></div></li>
+                                    <li><span class="topic-num">1.6</span><div class="topic-info"><h4>Introducción al modelado y diagramas de flujo</h4><p>El modelado representa un proceso de forma simplificada; los diagramas de flujo muestran visualmente sus pasos, decisiones y resultados.</p></div></li>
+                                    <li><span class="topic-num">1.7</span><div class="topic-info"><h4>Conceptos fundamentales de la Teoría General de Sistemas (TGS)</h4><p>La TGS estudia sistemas como conjuntos relacionados e introduce ideas como entradas, procesos, salidas, retroalimentación y entorno.</p></div></li>
+                                    <li><span class="topic-num">1.8</span><div class="topic-info"><h4>Componentes del sistema y tipos de sistemas de información</h4><p>Un sistema de información combina personas, procesos, datos, hardware y software para capturar, procesar y comunicar información.</p></div></li>
+                                    <li><span class="topic-num">1.9</span><div class="topic-info"><h4>La empresa como sistema</h4><p>Una empresa puede entenderse como un sistema abierto que recibe recursos, transforma insumos y entrega productos o servicios a su entorno.</p></div></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="activities-panel unit-activities">
+                            <h3 class="panel-title"><i class="fa-solid fa-images"></i> Actividades y exposiciones</h3>
+                            <p class="unit-description">Exposiciones y productos académicos desarrollados durante la Unidad 1.</p>
+                            <div class="activities-grid">
+                                <article class="activity-card">
+                                    <img class="activity-image" src="img/lineatiempo.png" alt="Presentación de la línea de tiempo sobre ingeniería de sistemas">
+                                    <div class="activity-detail">
+                                        <span class="activity-label">Actividad 1</span>
+                                        <h5>Línea de tiempo: evolución de la ingeniería de sistemas</h5>
+                                        <p>Investigamos la evolución de la ingeniería de sistemas y sus principales roles profesionales. El resultado fue una línea de tiempo que organiza los hitos, cambios tecnológicos y transformaciones del campo.</p>
+                                        <a class="activity-link" href="Docs/lineaTiempoJulian(1).pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Ver documento PDF</a>
+                                    </div>
+                                </article>
+                                <article class="activity-card">
+                                    <img class="activity-image" src="img/carteleras(1).png" alt="Carteleras de la exposición sobre ingeniería de sistemas">
+                                    <div class="activity-detail">
+                                        <span class="activity-label">Actividad 2</span>
+                                        <h5>Exposición: la ingeniería de sistemas en contexto</h5>
+                                        <p>En equipos de tres integrantes, presentamos las áreas de actuación de la ingeniería de sistemas, su impacto social, el perfil profesional y su relación con situaciones reales del entorno.</p>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="unidad2" class="view-section">
+                    <div class="unit-container">
+                        <div class="unit-header-card">
+                            <span class="unit-badge">Unidad de Aprendizaje II</span>
+                            <h2>El Ingeniero de Sistemas en Contexto Empresarial y Social</h2>
+                            <p class="unit-description">Esta unidad aborda la identidad profesional del ingeniero de sistemas, sus roles, su responsabilidad social y las herramientas de comunicación y productividad que utiliza.</p>
+                        </div>
+                        <div class="unit-grid-layout">
+                            <div class="topics-panel">
+                                <h3 class="panel-title"><i class="fa-solid fa-list-check"></i> Temas de la unidad</h3>
+                                <ul class="topics-list">
+                                    <li><span class="topic-num">2.1</span><div class="topic-info"><h4>El ingeniero de sistemas amigoniano</h4><p>Profesional que combina conocimientos tecnológicos con formación humana, ética y compromiso con la transformación del entorno.</p></div></li>
+                                    <li><span class="topic-num">2.2</span><div class="topic-info"><h4>Perfil del ingeniero amigoniano</h4><p>Conjunto de conocimientos, habilidades y valores que orientan un ejercicio profesional competente, solidario y responsable.</p></div></li>
+                                    <li><span class="topic-num">2.3</span><div class="topic-info"><h4>Perfiles y roles ocupacionales del ingeniero de sistemas</h4><p>Puede desempeñarse como desarrollador, analista, arquitecto, administrador, consultor, gestor de proyectos o especialista en datos.</p></div></li>
+                                    <li><span class="topic-num">2.4</span><div class="topic-info"><h4>Impacto social de la tecnología</h4><p>La tecnología modifica la educación, el trabajo y la comunicación; por eso debe diseñarse considerando inclusión, privacidad y sostenibilidad.</p></div></li>
+                                    <li><span class="topic-num">2.6</span><div class="topic-info"><h4>Netiqueta y comunicación profesional digital</h4><p>La netiqueta reúne normas de respeto, claridad, seguridad y responsabilidad para comunicarse en medios digitales y laborales.</p></div></li>
+                                    <li><span class="topic-num">2.7</span><div class="topic-info"><h4>Gestión de archivos y ofimática como herramientas básicas</h4><p>La organización de archivos y el uso de documentos, hojas de cálculo y presentaciones facilitan el trabajo académico y profesional.</p></div></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="activities-panel unit-activities">
+                            <h3 class="panel-title"><i class="fa-solid fa-images"></i> Actividades y exposiciones</h3>
+                            <p class="unit-description">Reflexiones y actividades colaborativas realizadas durante la Unidad 2.</p>
+                            <div class="activities-grid">
+                                <article class="activity-card">
+                                    <img class="activity-image" src="img/futuro.png" alt="Presentación sobre la proyección profesional en ingeniería de sistemas">
+                                    <div class="activity-detail">
+                                        <span class="activity-label">Actividad 1</span>
+                                        <h5>Proyección profesional como ingenieros de sistemas</h5>
+                                        <p>Reflexionamos sobre nuestra proyección a corto, mediano y largo plazo después de lo aprendido en el curso. El ejercicio permitió reconocer metas, intereses y acciones concretas para construir nuestro perfil profesional.</p>
+                                        <p class="activity-english"><strong>Long-term plan:</strong> In the long term, we aim to become responsible systems engineers who design innovative, ethical and sustainable technology solutions that create a positive impact on society.</p>
+                                        <a class="activity-link" href="Docs/futuro(2).pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Ver documento PDF</a>
+                                    </div>
+                                </article>
+                                <article class="activity-card">
+                                    <img class="activity-image" src="img/roles.png" alt="Presentación sobre el rol del ingeniero de despliegue">
+                                    <div class="activity-detail">
+                                        <span class="activity-label">Actividad 2</span>
+                                        <h5>Rol profesional: ingeniero de despliegue</h5>
+                                        <p>Documentamos el rol del ingeniero de despliegue, sus responsabilidades, herramientas y relación con las demás etapas del desarrollo de software. El trabajo colaborativo buscó ofrecer una guía útil para los demás integrantes del grupo.</p>
+                                        <a class="activity-link" href="Docs/roles(2).pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Ver documento PDF</a>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="unidad3" class="view-section">
+                    <div class="unit-container">
+                        <div class="unit-header-card">
+                            <span class="unit-badge">Unidad de Aprendizaje III</span>
+                            <h2>Evolución de las TIC y Sistemas Informáticos</h2>
+                            <p class="unit-description">Esta unidad relaciona las tecnologías de la información y la comunicación con los sistemas computacionales, la inteligencia artificial y los sistemas de información actuales.</p>
+                        </div>
+                        <div class="unit-grid-layout">
+                            <div class="topics-panel">
+                                <h3 class="panel-title"><i class="fa-solid fa-list-check"></i> Temas de la unidad</h3>
+                                <ul class="topics-list">
+                                    <li><span class="topic-num">3.1</span><div class="topic-info"><h4>Las TIC desde el punto de vista del ingeniero de sistemas</h4><p>Las TIC son herramientas y recursos para gestionar información y comunicación; el ingeniero evalúa su utilidad, integración, seguridad e impacto.</p></div></li>
+                                    <li><span class="topic-num">3.2</span><div class="topic-info"><h4>Introducción a los sistemas computacionales como sistema</h4><p>Un sistema computacional integra hardware, software, datos, usuarios y procedimientos para recibir entradas, procesarlas y producir resultados.</p></div></li>
+                                    <li><span class="topic-num">3.3</span><div class="topic-info"><h4>Evolución del hardware y el software en los últimos 20 años</h4><p>El hardware se volvió más potente y móvil, mientras el software evolucionó hacia servicios conectados, plataformas en la nube y aplicaciones inteligentes.</p></div></li>
+                                    <li><span class="topic-num">3.4</span><div class="topic-info"><h4>Inteligencia Artificial: conceptos básicos y tendencias</h4><p>La IA busca que las máquinas realicen tareas asociadas con la inteligencia humana; incluye aprendizaje automático, modelos generativos y análisis predictivo.</p></div></li>
+                                    <li><span class="topic-num">3.5</span><div class="topic-info"><h4>Mirada actual de los sistemas de información</h4><p>Los sistemas actuales integran datos, servicios digitales y usuarios para apoyar decisiones, automatizar procesos y responder a necesidades organizacionales.</p></div></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="activities-panel unit-activities">
+                            <h3 class="panel-title"><i class="fa-solid fa-images"></i> Actividades y exposiciones</h3>
+                            <p class="unit-description">Productos de aplicación y reflexión sobre las TIC, los roles profesionales y el impacto de la tecnología.</p>
+                            <div class="activities-grid">
+                                <article class="activity-card">
+                                    <img class="activity-image" src="img/habilidades.png" alt="Presentación sobre habilidades TIC y el perfil del ingeniero de sistemas amigoniano">
+                                    <div class="activity-detail">
+                                        <span class="activity-label">Actividad 1</span>
+                                        <h5>Habilidades TIC y perfil del ingeniero de sistemas amigoniano</h5>
+                                        <p>Fortalecimos nuestras competencias digitales mediante la actualización de perfiles en LinkedIn, Campus Virtual y correo institucional. Además, elaboramos una matriz comparativa de roles del desarrollo de software, un mapa mental del ingeniero de sistemas amigoniano y una reflexión sobre nuestro proceso universitario.</p>
+                                        <a class="activity-link" href="Docs/Habilidades(3).pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Ver documento PDF</a>
+                                    </div>
+                                </article>
+                                <article class="activity-card activity-video-card">
+                                    <video class="activity-video" controls preload="metadata" poster="img/habilidades.png">
+                                        <source src="Vids/videoConsumo(3).mp4" type="video/mp4">
+                                        Tu navegador no admite la reproducción de video.
+                                    </video>
+                                    <div class="activity-detail">
+                                        <span class="activity-label">Actividad 2</span>
+                                        <h5>Propuesta tecnológica ante una problemática actual</h5>
+                                        <p>Analizamos un problema del entorno, identificamos a las personas afectadas y sus causas principales. Luego planteamos cómo la ingeniería y la tecnología pueden contribuir a mejorar la situación, considerando beneficios, riesgos e impactos para las personas, las organizaciones y la sociedad.</p>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. HOJAS DE VIDA (TARJETAS INTEGRANTES) -->
+                <section id="hojasdevida" class="view-section">
+                    <div class="team-container">
+                        <div class="team-header">
+                            <h2>Perfiles del Equipo de Desarrollo</h2>
+                            <p>Estudiantes de primer semestre de Ingeniería de Sistemas, comprometidos con la excelencia académica y el desarrollo tecnológico.</p>
+                        </div>
+                        
+                        <div class="team-grid">
+                            <!-- Tarjeta Integrante 1 -->
+                            <div class="team-card">
+                                <div class="team-card-banner"></div>
+                                <div class="team-avatar-container">
+                                    <div class="team-avatar">
+                                        <img src="img/Foto1.png" alt="Foto de Julián David Agudelo Marin">
+                                    </div>
+                                </div>
+                                <div class="team-info">
+                                    <h3>Julián David Agudelo Marin</h3>
+                                    <span class="team-role">Ingeniero en proceso</span>
+                                    <p class="team-bio">Soy un ingeniero en proceso de la Universidad Católica Luis Amigó, apasionado por la tecnología y el desarrollo de soluciones innovadoras.</p>
+                                </div>
+                                <div class="team-actions">
+                                    <a href="https://www.linkedin.com/in/julian-david-85b480347" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" title="Perfil de LinkedIn">
+                                        <i class="fa-brands fa-linkedin"></i> LinkedIn
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Tarjeta Integrante 2 -->
+                            <div class="team-card">
+                                <div class="team-card-banner"></div>
+                                <div class="team-avatar-container">
+                                    <div class="team-avatar">
+                                        <img src="img/Foto2.png" alt="Foto de Fabian Shneyder Rojas Vacca">
+                                    </div>
+                                </div>
+                                <div class="team-info">
+                                    <h3>Fabian Shneyder Rojas Vacca</h3>
+                                    <span class="team-role">Ingeniero en proceso</span>
+                                    <p class="team-bio">Ingeniero en proceso de la Universidad Católica Luis Amigó, interesado en el desarrollo de software y la resolución de problemas complejos.</p>
+                                </div>
+                                <div class="team-actions">
+                                    <a href="https://www.linkedin.com/in/fabian-shneyder-rojas-vacca-818025437" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" title="Perfil de LinkedIn">
+                                        <i class="fa-brands fa-linkedin"></i> LinkedIn
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- FOOTER INSTITUCIONAL -->
+            <footer class="institutional-footer">
+                <div class="footer-top">
+                    <div class="footer-brand">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Universidad Católica Luis Amigó</span>
+                    </div>
+                    <div class="footer-course">
+                        <span>Introducción a la Ingeniería de Sistemas</span>
+                    </div>
+                </div>
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p><span>&#9679;</span>julian.agudeloma@amigo.edu.co</p>
+                    <p><span>&#9679;</span>fabian.rojasva@amigo.edu.co</p>
+                    <p class="footer-location"><i class="fa-solid fa-location-dot"></i> Medellín, Colombia</p>
+                </div>
+            </footer>
+        </main>
+
+        <!-- PANEL LATERAL DERECHO (Foro Global) -->
+        <aside class="widgets-panel">
+            <!-- FORO DE CHAT GLOBAL -->
+            <div class="widget-box widget-chat">
+                <div class="widget-header">
+                    <div class="widget-title">
+                        <i class="fa-solid fa-comments"></i>
+                        <h3>Foro de Chat Global</h3>
+                    </div>
+                    <div class="chat-account-area">
+                        <div class="user-count" title="Usuarios conectados">
+                            <span class="online-dot"></span>
+                            <span>3 online</span>
+                        </div>
+                        <div class="auth-status" id="authStatus">
+                            <span id="currentUserLabel">Invitado</span>
+                            <button class="auth-action" type="button" data-auth-mode="login">Ingresar</button>
+                            <button class="auth-action" type="button" data-auth-mode="register">Registrarse</button>
+                            <button class="auth-action hidden" id="logoutButton" type="button">Salir</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-body chat-wrapper">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message received">
+                            <span class="chat-user">Prof. Alejandro</span>
+                            <div class="chat-bubble">
+                                <p>Excelente iniciativa muchachos. Recuerden que la navegación SPA debe ser suave.</p>
+                                <span class="chat-time">10:14 AM</span>
+                            </div>
+                        </div>
+                        <div class="chat-message received">
+                            <span class="chat-user">María Camila</span>
+                            <div class="chat-bubble">
+                                <p>¡Hola profe! Sí, estamos usando transiciones CSS limpias para el cambio de vistas.</p>
+                                <span class="chat-time">10:15 AM</span>
+                            </div>
+                        </div>
+                        <div class="chat-message sent">
+                            <div class="chat-bubble">
+                                <p>¡Hola a todos! El foro de chat ya tiene maquetación. Luego integraremos el backend para que persista.</p>
+                                <span class="chat-time">10:16 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="chat-input-form" id="chatForm">
+                        <input type="text" id="chatInput" placeholder="Escribe un mensaje..." autocomplete="off" required>
+                        <button type="submit" class="btn-send" title="Enviar mensaje">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- MODAL DE AUTENTICACIÓN LOCAL -->
+    <div class="auth-modal" id="authModal" aria-hidden="true">
+        <div class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+            <button class="auth-close" id="authClose" type="button" aria-label="Cerrar ventana">&times;</button>
+            <div class="auth-heading">
+                <span class="auth-kicker">Foro académico</span>
+                <h2 id="authTitle">Iniciar sesión</h2>
+                <p id="authDescription">Ingresa para participar en el foro con tu nombre.</p>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <label for="loginEmail">Correo electrónico</label>
+                <input id="loginEmail" type="email" autocomplete="email" required>
+                <label for="loginPassword">Contraseña</label>
+                <input id="loginPassword" type="password" autocomplete="current-password" required>
+                <button class="auth-submit" type="submit">Iniciar sesión</button>
+            </form>
+            <form class="auth-form hidden" id="registerForm">
+                <label for="registerName">Nombre para mostrar</label>
+                <input id="registerName" type="text" minlength="2" maxlength="60" autocomplete="name" required>
+                <label for="registerEmail">Correo electrónico</label>
+                <input id="registerEmail" type="email" autocomplete="email" required>
+                <label for="registerPassword">Contraseña</label>
+                <input id="registerPassword" type="password" minlength="6" autocomplete="new-password" required>
+                <button class="auth-submit" type="submit">Crear cuenta</button>
+            </form>
+            <p class="auth-feedback" id="authFeedback" role="status"></p>
+            <button class="auth-switch" id="authSwitch" type="button">¿No tienes cuenta? Regístrate</button>
+        </div>
+    </div>
+
+    <!-- Supabase: autenticación, base de datos y tiempo real -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <!-- Enlace al archivo de JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
