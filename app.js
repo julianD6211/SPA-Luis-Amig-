@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
     const authSwitch = document.getElementById('authSwitch');
-    const currentUserLabel = document.getElementById('currentUserLabel');
+    const currentUserName = document.getElementById('currentUserName');
     const logoutButton = document.getElementById('logoutButton');
     const authModeButtons = document.querySelectorAll('[data-auth-mode]');
     let currentUser = supabaseClient ? null : readStorage(SESSION_STORAGE_KEY);
@@ -159,15 +159,27 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUser = { id: user.id, name: user.name, email: user.email };
         localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(currentUser));
         updateAuthUI();
+        if (supabaseClient) ensureUserProfile(currentUser);
     }
 
     function updateAuthUI() {
         const loggedIn = Boolean(currentUser);
-        currentUserLabel.textContent = loggedIn ? currentUser.name : 'Invitado';
+        currentUserName.textContent = loggedIn ? currentUser.name : '';
+        currentUserName.classList.toggle('hidden', !loggedIn);
         authModeButtons.forEach(button => button.classList.toggle('hidden', loggedIn));
         logoutButton.classList.toggle('hidden', !loggedIn);
         chatInput.disabled = !loggedIn;
         chatInput.placeholder = loggedIn ? 'Escribe un mensaje...' : 'Inicia sesión para escribir';
+    }
+
+    async function ensureUserProfile(user) {
+        const { error } = await supabaseClient.from('users').upsert({
+            id: user.id,
+            name: user.name,
+            email: user.email
+        }, { onConflict: 'id' });
+
+        if (error) console.error('No fue posible guardar el perfil:', error.message);
     }
 
     function setAuthMode(mode) {
@@ -234,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             setSession({ id: data.user.id, name, email });
+            await loadRemoteMessages();
             registerForm.reset();
             closeAuthModal();
             return;
@@ -271,6 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 name: data.user.user_metadata?.name || email.split('@')[0],
                 email
             });
+            await loadRemoteMessages();
             loginForm.reset();
             closeAuthModal();
             return;
@@ -324,7 +338,12 @@ document.addEventListener('DOMContentLoaded', () => {
         chatMessages.appendChild(messageElement);
     }
 
+    let remoteChatLoaded = false;
+    let remoteChatChannel = null;
+
     async function loadRemoteMessages() {
+        if (remoteChatLoaded || !currentUser) return;
+
         const { data, error } = await supabaseClient
             .from('chat_messages')
             .select('id, user_id, user_name, content, created_at')
@@ -336,9 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        chatMessages.innerHTML = '';
         data.forEach(renderRemoteMessage);
         scrollChatToBottom();
-        supabaseClient.channel('chat-messages')
+        remoteChatLoaded = true;
+        remoteChatChannel = supabaseClient.channel('chat-messages')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_messages' }, payload => {
                 renderRemoteMessage(payload.new);
                 scrollChatToBottom();
@@ -354,10 +375,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 name: data.session.user.user_metadata?.name || data.session.user.email.split('@')[0],
                 email: data.session.user.email
             });
+            await loadRemoteMessages();
         }
         supabaseClient.auth.onAuthStateChange((_event, session) => {
-            if (!session) {
+            if (session) {
+                setSession({
+                    id: session.user.id,
+                    name: session.user.user_metadata?.name || session.user.email.split('@')[0],
+                    email: session.user.email
+                });
+                loadRemoteMessages();
+            } else {
                 currentUser = null;
+                remoteChatLoaded = false;
+                if (remoteChatChannel) supabaseClient.removeChannel(remoteChatChannel);
                 updateAuthUI();
             }
         });
@@ -365,7 +396,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (supabaseClient) {
         initializeRemoteSession();
-        loadRemoteMessages();
     }
 
     scrollChatToBottom();

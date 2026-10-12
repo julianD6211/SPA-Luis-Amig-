@@ -953,6 +953,7 @@ button, input {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 14px;
 }
 
 .chat-account-area {
@@ -965,25 +966,51 @@ button, input {
 .auth-status {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 6px;
     color: var(--text-muted);
     font-size: 10px;
     font-weight: 600;
+    justify-content: flex-end;
 }
 
 .auth-action {
     border: 0;
-    background: none;
-    color: var(--primary-orange);
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    padding: 0;
+    padding: 8px 10px;
+    transition: var(--transition-fast);
 }
 
-.auth-action:hover,
+.auth-primary {
+    background-color: var(--primary-orange);
+    color: var(--text-white);
+}
+
+.auth-primary:hover {
+    background-color: var(--primary-orange-hover);
+}
+
+.auth-secondary {
+    background-color: var(--primary-orange-light);
+    color: var(--primary-orange);
+}
+
+.auth-secondary:hover,
+.auth-action:not(.auth-primary):not(.auth-secondary):hover,
 .auth-switch:hover {
     color: var(--primary-orange-hover);
+    background-color: var(--primary-orange-tint);
+}
+
+.current-user-name {
+    color: var(--text-main);
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .hidden {
