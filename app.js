@@ -74,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sidebar) {
             sidebar.classList.remove('mobile-active');
         }
+        const forumPanel = document.querySelector('.widgets-panel');
+        if (forumPanel) forumPanel.classList.remove('mobile-forum-active');
     }
 
     // Registrar oyente de eventos para cambios en el Hash
@@ -97,7 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Menú Hamburguesa Responsivo para Móviles ---
     const mobileToggle = document.getElementById('mobileToggle');
+    const forumToggle = document.getElementById('forumToggle');
     const sidebar = document.querySelector('.sidebar');
+    const forumPanel = document.querySelector('.widgets-panel');
 
     if (mobileToggle && sidebar) {
         mobileToggle.addEventListener('click', (e) => {
@@ -110,6 +114,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (sidebar.classList.contains('mobile-active')) {
                 sidebar.classList.remove('mobile-active');
             }
+            if (forumPanel) forumPanel.classList.remove('mobile-forum-active');
+        });
+    }
+
+    if (forumToggle && forumPanel) {
+        forumToggle.addEventListener('click', event => {
+            event.stopPropagation();
+            forumPanel.classList.toggle('mobile-forum-active');
+            sidebar?.classList.remove('mobile-active');
         });
     }
 
