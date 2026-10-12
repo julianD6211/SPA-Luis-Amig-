@@ -313,14 +313,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatForm = document.getElementById('chatForm');
     const chatInput = document.getElementById('chatInput');
     const chatMessages = document.getElementById('chatMessages');
+    const onlineCount = document.getElementById('onlineCount');
+    let presenceChannel = null;
+    const presenceKey = crypto.randomUUID();
 
     updateAuthUI();
+    if (!supabaseClient) onlineCount.textContent = 'Modo local';
 
     // Desplazar chat al último mensaje al cargar
     function scrollChatToBottom() {
         if (chatMessages) {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
+    }
+
+    function updateOnlineCount() {
+        if (!presenceChannel) {
+            onlineCount.textContent = '0 conectados';
+            return;
+        }
+
+        const presenceState = presenceChannel.presenceState();
+        onlineCount.textContent = `${Object.keys(presenceState).length} conectados`;
+    }
+
+    function startPresence() {
+        if (!supabaseClient || presenceChannel) return;
+
+        presenceChannel = supabaseClient.channel('forum-presence', {
+            config: { presence: { key: currentUser?.id || presenceKey } }
+        });
+
+        presenceChannel
+            .on('presence', { event: 'sync' }, updateOnlineCount)
+            .on('presence', { event: 'join' }, updateOnlineCount)
+            .on('presence', { event: 'leave' }, updateOnlineCount)
+            .subscribe(async status => {
+                if (status === 'SUBSCRIBED') {
+                    await trackPresence();
+                    updateOnlineCount();
+                }
+            });
+    }
+
+    async function trackPresence() {
+        if (!presenceChannel || !currentUser) return;
+        await presenceChannel.track({
+            user_id: currentUser.id,
+            user_name: currentUser.name
+        });
+    }
+
+    async function stopPresence() {
+        if (!presenceChannel) return;
+        await presenceChannel.untrack();
+        await supabaseClient.removeChannel(presenceChannel);
+        presenceChannel = null;
+        updateOnlineCount();
     }
 
     function renderRemoteMessage(message) {
@@ -376,6 +425,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 email: data.session.user.email
             });
             await loadRemoteMessages();
+            startPresence();
+            setTimeout(trackPresence, 0);
         }
         supabaseClient.auth.onAuthStateChange((_event, session) => {
             if (session) {
@@ -385,16 +436,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     email: session.user.email
                 });
                 loadRemoteMessages();
+                startPresence();
+                setTimeout(trackPresence, 0);
             } else {
                 currentUser = null;
                 remoteChatLoaded = false;
                 if (remoteChatChannel) supabaseClient.removeChannel(remoteChatChannel);
+                setTimeout(async () => {
+                    await stopPresence();
+                    startPresence();
+                }, 0);
                 updateAuthUI();
             }
         });
     }
 
     if (supabaseClient) {
+        startPresence();
         initializeRemoteSession();
     }
 
